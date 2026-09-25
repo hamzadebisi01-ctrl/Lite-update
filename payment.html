@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excoders Institute — Payment</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    .sponsored {
+      background: linear-gradient(90deg, #2a1a4a, #1a0f2e, #2a1a4a);
+      color: #c4b5fd;
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 8px 12px;
+      font-weight: 600;
+      border-bottom: 1px solid #5b3a9e;
+    }
+    .container { max-width: 480px; margin: 0 auto; padding: 20px; }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+    .top b { font-size: 1.3rem; font-weight: 900; }
+    .top b span { color: #a855f7; }
+    .step { font-size: 0.75rem; color: #666; }
+    .order {
+      background: linear-gradient(135deg, #12121a, #0f0f14);
+      border: 1px solid #2a2a35;
+      border-radius: 16px;
+      padding: 20px;
+      margin: 16px 0 24px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 8px 0;
+      font-size: 0.95rem;
+    }
+    .row.total {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid #2a2a35;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .dim { color: #777; }
+    .label {
+      font-size: 0.7rem;
+      color: #888;
+      margin: 20px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: block;
+    }
+    .input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0e0e14;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+    .input:focus { border-color: #a855f7; }
+    .input::placeholder { color: #555; }
+    .m {
+      border: 1px solid #2a2a35;
+      background: #12121a;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .m:hover, .m.active {
+      border-color: #a855f7;
+      background: #181826;
+    }
+    .m b { font-size: 0.95rem; color: #fff; }
+    .m p { font-size: 0.8rem; color: #777; margin-top: 2px; }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #a855f7; color: #fff; }
+    .warning {
+      margin-top: 24px;
+      background: #1a1200;
+      border: 1px solid #5c4a00;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      color: #e6c200;
+      line-height: 1.45;
+    }
+    .warning strong { color: #ffd700; }
+    .note {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sponsored">
+    ⭐ SPONSORED PROGRAM • EXCODERS INSTITUTE ELITE 2026 • OFFICIAL
+  </div>
+  <div class="container">
+    <div class="top">
+      <b>EXCODERS <span>ELITE</span></b>
+      <span class="step">Step 2 of 3</span>
+    </div>
+
+    <div class="order">
+      <div class="row"><span class="dim">Program</span><span>Excoders Elite Access</span></div>
+      <div class="row"><span class="dim">Price</span><span>$5.00</span></div>
+      <div class="row total"><span>Total</span><span style="color:#a855f7">$5.00</span></div>
+    </div>
+
+    <span class="label">Registration Details</span>
+    <input class="input" id="name" placeholder="Full Name" readonly>
+    <input class="input" id="nickname" placeholder="Nickname" readonly>
+    <input class="input" id="whatsapp" placeholder="WhatsApp Number" readonly>
+
+    <span class="label">Payment Method — All via WhatsApp</span>
+
+    <div class="m active" id="m1" onclick="pick('gift')">
+      <div>
+        <b>🎁 Gift Card</b>
+        <p>Send card code via WhatsApp DM</p>
+      </div>
+    </div>
+
+    <div class="m" id="m2" onclick="pick('bank')">
+      <div>
+        <b>🏦 Bank Deposit / Transfer</b>
+        <p>Get account details on WhatsApp DM</p>
+      </div>
+    </div>
+
+    <div class="m" id="m3" onclick="pick('paypal')">
+      <div>
+        <b>💳 PayPal</b>
+        <p>Get PayPal details on WhatsApp DM</p>
+      </div>
+    </div>
+
+    <button class="btn" onclick="checkout()">COMPLETE — $5 → OPEN WHATSAPP</button>
+
+    <p class="note">Every payment method opens a chat with official HR.<br>After payment proof is confirmed, access to the Tasks Arena will be granted.</p>
+
+    <div class="warning">
+      ⚠️ <strong>BEWARE OF SCAMS</strong><br>
+      No one will message you claiming to be a manager except the official Institute HR:<br>
+      <strong>09113257933</strong><br>
+      Only message this number for payment confirmation.
+    </div>
+  </div>
+
+  <script>
+    let method = 'gift';
+
+    document.getElementById('name').value = localStorage.getItem('ex_name') || '';
+    document.getElementById('nickname').value = localStorage.getItem('ex_nickname') || '';
+    document.getElementById('whatsapp').value = localStorage.getItem('ex_whatsapp') || '';
+
+    function pick(t) {
+      method = t;
+      document.getElementById('m1').classList.remove('active');
+      document.getElementById('m2').classList.remove('active');
+      document.getElementById('m3').classList.remove('active');
+      if (t === 'gift') document.getElementById('m1').classList.add('active');
+      if (t === 'bank') document.getElementById('m2').classList.add('active');
+      if (t === 'paypal') document.getElementById('m3').classList.add('active');
+    }
+
+    function checkout() {
+      const name = localStorage.getItem('ex_name') || 'Member';
+      const nickname = localStorage.getItem('ex_nickname') || '';
+      const whatsapp = localStorage.getItem('ex_whatsapp') || '';
+
+      let methodText = 'Gift Card';
+      if (method === 'bank') methodText = 'Bank Deposit / Transfer';
+      if (method === 'paypal') methodText = 'PayPal';
+
+      const message = encodeURIComponent(
+        `Hello Excoders HR 👋\n\nI want to complete my $5 registration.\n\n` +
+        `Full Name: ${name}\n` +
+        `Nickname: ${nickname}\n` +
+        `WhatsApp: ${whatsapp}\n` +
+        `Preferred Payment: ${methodText}\n\n` +
+        `Please send me the payment details. Thank you!`
+      );
+
+      // ALL methods open WhatsApp DM
+      window.open(`https://wa.me/2349113257933?text=${message}`, '_blank');
+
+      localStorage.setItem('ex_payment_pending', 'true');
+      localStorage.setItem('ex_method', methodText);
+
+      setTimeout(() => {
+        if (confirm('You have been redirected to WhatsApp (09113257933).\n\nAfter you send payment proof and access is granted by HR, click OK to enter the Tasks Arena.\n\n(Only HR 09113257933 can grant access)')) {
+          localStorage.setItem('ex_access', 'true');
+          window.location.href = 'tasks.html';
+        }
+      }, 800);
+    }
+  </script>
+</body>
+</html>

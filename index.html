@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excoders Institute — Join the Elite</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    .sponsored {
+      background: linear-gradient(90deg, #2a1a4a, #1a0f2e, #2a1a4a);
+      color: #c4b5fd;
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 8px 12px;
+      font-weight: 600;
+      border-bottom: 1px solid #5b3a9e;
+    }
+    .container { max-width: 480px; margin: 0 auto; padding: 20px; }
+    header {
+      text-align: center;
+      padding: 32px 0 20px;
+    }
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+    h1 span { color: #a855f7; }
+    .desc {
+      color: #888;
+      font-size: 0.95rem;
+      margin: 12px 0 28px;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .features div {
+      background: #12121a;
+      border: 1px solid #2a2a35;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .stats {
+      text-align: center;
+      background: linear-gradient(135deg, #1a1a2e, #12121a);
+      border: 1px solid #2a2a35;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 28px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    .stats strong { color: #a855f7; font-size: 1.1rem; }
+    .form-box {
+      background: #12121a;
+      border: 1px solid #2a2a35;
+      border-radius: 16px;
+      padding: 24px;
+    }
+    label {
+      display: block;
+      font-size: 0.75rem;
+      color: #888;
+      margin: 14px 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0e0e14;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-color: #a855f7; }
+    input::placeholder { color: #555; }
+    h3 {
+      margin: 24px 0 12px;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    .challenge {
+      background: #0e0e14;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .challenge:hover, .challenge.selected {
+      border-color: #a855f7;
+      background: #181826;
+    }
+    .challenge b { color: #fff; font-size: 0.95rem; }
+    .challenge span { color: #666; font-size: 0.8rem; margin-left: auto; }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: #a855f7; color: #fff; transform: translateY(-1px); }
+    .warning {
+      margin-top: 28px;
+      background: #1a1200;
+      border: 1px solid #5c4a00;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      color: #e6c200;
+      line-height: 1.4;
+    }
+    .warning strong { color: #ffd700; }
+    footer {
+      text-align: center;
+      padding: 30px 0;
+      color: #444;
+      font-size: 0.75rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="sponsored">
+    ⭐ SPONSORED PROGRAM • EXCODERS INSTITUTE ELITE 2026 • OFFICIAL
+  </div>
+  <div class="container">
+    <header>
+      <h1>JOIN THE<br><span>ELITE.</span></h1>
+      <p class="desc">Excoders Institute is not a course. It’s a battlefield for builders who want to rise.</p>
+    </header>
+
+    <div class="features">
+      <div>⚡ Weekly Challenges & Rankings</div>
+      <div>🏆 Cash Prizes up to $10,000</div>
+      <div>💬 Direct WhatsApp Access to HR</div>
+    </div>
+
+    <div class="stats">
+      <strong>1,200+</strong> members already competing<br>
+      Gift Card • Bank Transfer • PayPal — all via WhatsApp
+    </div>
+
+    <div class="form-box">
+      <label>Full Name</label>
+      <input type="text" id="name" placeholder="Your complete name" required>
+
+      <label>Nickname</label>
+      <input type="text" id="nickname" placeholder="How should we call you?" required>
+
+      <label>WhatsApp Number</label>
+      <input type="tel" id="whatsapp" placeholder="e.g. 09113257933" required>
+
+      <h3>Choose your focus (optional)</h3>
+      <div class="challenge" onclick="toggle(this)"><b>💻 Code Rush</b><span>Frontend / Backend</span></div>
+      <div class="challenge" onclick="toggle(this)"><b>🎨 Design Duel</b><span>UI / Graphics</span></div>
+      <div class="challenge" onclick="toggle(this)"><b>🛡️ Cyber Hunt</b><span>CTF & Security</span></div>
+      <div class="challenge" onclick="toggle(this)"><b>✍️ Content Clash</b><span>Writing</span></div>
+      <div class="challenge" onclick="toggle(this)"><b>🎬 Edit Wars</b><span>Video & Motion</span></div>
+      <div class="challenge" onclick="toggle(this)"><b>🧠 Logic Arena</b><span>Puzzles</span></div>
+
+      <button class="btn" onclick="register()">REGISTER & ENTER BATTLEFIELD →</button>
+    </div>
+
+    <div class="warning">
+      ⚠️ <strong>BEWARE OF SCAMS</strong><br>
+      No one will message you claiming to be a manager except the official Institute HR:<br>
+      <strong>09113257933</strong><br>
+      Anyone else is a scammer. Stay safe.
+    </div>
+
+    <footer>© 2026 Excoders Institute. All rights reserved.</footer>
+  </div>
+
+  <script>
+    function toggle(el) {
+      el.classList.toggle('selected');
+    }
+
+    function register() {
+      const name = document.getElementById('name').value.trim();
+      const nickname = document.getElementById('nickname').value.trim();
+      const whatsapp = document.getElementById('whatsapp').value.trim();
+
+      if (!name || !nickname || !whatsapp) {
+        alert('Please fill in Full Name, Nickname and WhatsApp Number.');
+        return;
+      }
+
+      localStorage.setItem('ex_name', name);
+      localStorage.setItem('ex_nickname', nickname);
+      localStorage.setItem('ex_whatsapp', whatsapp);
+
+      window.location.href = 'payment.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excoders Elite — Tasks Arena</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #0a0a0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+    .sponsored {
+      background: linear-gradient(90deg, #2a1a4a, #1a0f2e, #2a1a4a);
+      color: #c4b5fd;
+      text-align: center;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 8px 12px;
+      font-weight: 600;
+      border-bottom: 1px solid #5b3a9e;
+    }
+    .container { max-width: 480px; margin: 0 auto; padding: 16px; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 20px;
+    }
+    .logo { font-weight: 900; font-size: 1.2rem; }
+    .logo span { color: #a855f7; }
+    .user { font-size: 0.85rem; color: #aaa; }
+    .stats-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .stat {
+      background: #12121a;
+      border: 1px solid #2a2a35;
+      border-radius: 14px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .stat .val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #a855f7;
+    }
+    .stat .lbl { font-size: 0.7rem; color: #666; margin-top: 2px; text-transform: uppercase; }
+    .prize-banner {
+      background: linear-gradient(135deg, #2a1a4a, #1a122e);
+      border: 1px solid #5b3a9e;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .prize-banner h2 { font-size: 1rem; color: #c4b5fd; margin-bottom: 8px; }
+    .prizes { display: flex; justify-content: space-around; font-size: 0.85rem; }
+    .prizes div { text-align: center; }
+    .prizes strong { display: block; color: #ffd700; font-size: 1.1rem; }
+    .section-title {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 20px 0 12px;
+    }
+    .task {
+      background: #12121a;
+      border: 1px solid #2a2a35;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .task.done { border-color: #22c55e; opacity: 0.85; }
+    .task h3 { font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .task p { font-size: 0.85rem; color: #888; margin-bottom: 14px; }
+    .task .pts { color: #a855f7; font-weight: 700; font-size: 0.85rem; }
+    .btn {
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .btn:hover { background: #a855f7; color: #fff; }
+    .btn:disabled { background: #333; color: #666; cursor: not-allowed; }
+    .btn.secondary { background: #1e1e2a; color: #ccc; border: 1px solid #333; }
+    .btn.secondary:hover { border-color: #a855f7; color: #fff; }
+    #clickArea {
+      background: #1a1a2e;
+      border: 2px dashed #a855f7;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 12px 0;
+      user-select: none;
+    }
+    #clickArea:active { background: #2a1a4a; }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      background: #0e0e14;
+      border: 1px solid #2a2a35;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      margin: 8px 0;
+      outline: none;
+    }
+    input:focus, textarea:focus { border-color: #a855f7; }
+    .warning {
+      margin-top: 28px;
+      background: #1a1200;
+      border: 1px solid #5c4a00;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 0.8rem;
+      color: #e6c200;
+      line-height: 1.45;
+    }
+    .warning strong { color: #ffd700; }
+    .locked {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .locked h2 { margin-bottom: 12px; }
+    .locked p { color: #888; margin-bottom: 24px; }
+  </style>
+</head>
+<body>
+  <div class="sponsored">
+    ⭐ SPONSORED PROGRAM • EXCODERS INSTITUTE ELITE 2026 • OFFICIAL
+  </div>
+  <div class="container" id="app">
+    <!-- Content injected by JS -->
+  </div>
+
+  <script>
+    const hasAccess = localStorage.getItem('ex_access') === 'true';
+    const nickname = localStorage.getItem('ex_nickname') || 'Elite Member';
+
+    let points = parseInt(localStorage.getItem('elite_pts') || '0');
+    let streak = parseInt(localStorage.getItem('elite_streak') || '0');
+    let lastDaily = localStorage.getItem('elite_last') || '';
+    let completed = JSON.parse(localStorage.getItem('elite_completed') || '[]');
+
+    function save() {
+      localStorage.setItem('elite_pts', points);
+      localStorage.setItem('elite_streak', streak);
+      localStorage.setItem('elite_last', lastDaily);
+      localStorage.setItem('elite_completed', JSON.stringify(completed));
+    }
+
+    function updateUI() {
+      const ptsEl = document.getElementById('pts');
+      const streakEl = document.getElementById('streak');
+      const lvlEl = document.getElementById('lvl');
+      if (ptsEl) ptsEl.innerText = points;
+      if (streakEl) streakEl.innerText = streak + ' 🔥';
+      if (lvlEl) lvlEl.innerText = 'LVL ' + (1 + Math.floor(points / 100));
+
+      ['daily', 'speed', 'calc', 'code', 'logic'].forEach(id => {
+        const el = document.getElementById('task-' + id);
+        if (el && completed.includes(id)) {
+          el.classList.add('done');
+          const btn = el.querySelector('button');
+          if (btn) {
+            btn.disabled = true;
+            btn.innerText = '✓ Completed';
+          }
+        }
+      });
+    }
+
+    function claimDaily() {
+      const today = new Date().toDateString();
+      if (lastDaily === today) {
+        alert('You already claimed today\'s daily reward!');
+        return;
+      }
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      if (lastDaily === yesterday.toDateString()) {
+        streak++;
+      } else {
+        streak = 1;
+      }
+      lastDaily = today;
+      if (!completed.includes('daily')) {
+        points += 50;
+        completed.push('daily');
+      } else {
+        points += 30;
+      }
+      save();
+      updateUI();
+      alert('Daily claimed! +50 pts\nCurrent Streak: ' + streak + ' 🔥');
+    }
+
+    let clicks = 0, running = false;
+    function startSpeed() {
+      if (completed.includes('speed')) return;
+      clicks = 0;
+      running = true;
+      document.getElementById('clickArea').innerText = 'CLICK NOW!';
+      document.getElementById('clickInfo').innerText = 'Go go go! 5 seconds...';
+      setTimeout(() => {
+        running = false;
+        const info = document.getElementById('clickInfo');
+        if (clicks >= 25) {
+          info.innerText = '✅ Passed! ' + clicks + ' clicks';
+          points += 80;
+          completed.push('speed');
+          save();
+          updateUI();
+          alert('Speed Test Passed! +80 pts');
+        } else {
+          info.innerText = '❌ Need 25+ clicks. You got ' + clicks + '. Try again!';
+        }
+      }, 5000);
+    }
+    function clickTest() {
+      if (!running) return;
+      clicks++;
+      document.getElementById('clickArea').innerText = clicks + ' clicks';
+    }
+
+    function checkCalc() {
+      if (completed.includes('calc')) return;
+      const a1 = document.getElementById('q1').value.trim();
+      const a2 = document.getElementById('q2').value.trim();
+      if (a1 === '51' && a2 === '256') {
+        points += 60;
+        completed.push('calc');
+        save();
+        updateUI();
+        alert('Correct! +60 pts');
+      } else {
+        alert('Wrong answers. Try again!');
+      }
+    }
+
+    function checkCode() {
+      if (completed.includes('code')) return;
+      const ans = document.getElementById('codeAns').value.trim().toLowerCase();
+      if (ans === 'object' || ans === '"object"') {
+        points += 100;
+        completed.push('code');
+        save();
+        updateUI();
+        alert('Correct! +100 pts 🎉');
+      } else {
+        alert('Not quite. Hint: it is a famous JS quirk.');
+      }
+    }
+
+    function checkLogic() {
+      if (completed.includes('logic')) return;
+      const ans = document.getElementById('logicAns').value.trim().toLowerCase();
+      if (ans.includes('son') || ans === 'his son' || ans === 'my son') {
+        points += 70;
+        completed.push('logic');
+        save();
+        updateUI();
+        alert('Brilliant! +70 pts');
+      } else {
+        alert('Think again...');
+      }
+    }
+
+    const app = document.getElementById('app');
+
+    if (!hasAccess) {
+      app.innerHTML = `
+        <div class="locked">
+          <h2>🔒 Access Locked</h2>
+          <p>Complete your $5 registration and wait for HR to grant access.</p>
+          <p style="color:#a855f7;margin-bottom:20px">Official HR only: <strong>09113257933</strong></p>
+          <button class="btn" onclick="window.location.href='payment.html'">Go to Payment</button>
+          <div class="warning" style="margin-top:40px;text-align:left">
+            ⚠️ <strong>BEWARE OF SCAMS</strong><br>
+            No one will message you claiming to be a manager except the official Institute HR:<br>
+            <strong>09113257933</strong>
+          </div>
+        </div>
+      `;
+    } else {
+      app.innerHTML = `
+        <div class="header">
+          <div class="logo">EXCODERS <span>ELITE</span></div>
+          <div class="user">Hi, ${nickname}</div>
+        </div>
+
+        <div class="stats-bar">
+          <div class="stat"><div class="val" id="pts">0</div><div class="lbl">Points</div></div>
+          <div class="stat"><div class="val" id="streak">0 🔥</div><div class="lbl">Streak</div></div>
+          <div class="stat"><div class="val" id="lvl">LVL 1</div><div class="lbl">Level</div></div>
+        </div>
+
+        <div class="prize-banner">
+          <h2>🏆 SEASON PRIZES</h2>
+          <div class="prizes">
+            <div><strong>$10,000</strong>1st Place</div>
+            <div><strong>$5,000</strong>2nd Place</div>
+            <div><strong>$1,000</strong>3rd Place</div>
+          </div>
+          <p style="font-size:0.75rem;color:#aaa;margin-top:10px">Top points at season end win. Keep grinding!</p>
+        </div>
+
+        <div class="section-title">Daily Reward</div>
+        <div class="task" id="task-daily">
+          <h3>📅 Daily Check-in <span class="pts">+50 pts</span></h3>
+          <p>Claim once per day. Build your streak for bigger future rewards.</p>
+          <button class="btn" onclick="claimDaily()">Claim Daily Reward</button>
+        </div>
+
+        <div class="section-title">Skill Challenges</div>
+
+        <div class="task" id="task-speed">
+          <h3>⚡ Speed Click Test <span class="pts">+80 pts</span></h3>
+          <p>Click as fast as you can in 5 seconds. Need 25+ clicks to pass.</p>
+          <div id="clickArea" onclick="clickTest()">TAP TO START</div>
+          <p id="clickInfo" style="text-align:center;font-size:0.85rem;color:#888"></p>
+          <button class="btn secondary" onclick="startSpeed()">Start 5-Second Test</button>
+        </div>
+
+        <div class="task" id="task-calc">
+          <h3>🔢 Quick Math <span class="pts">+60 pts</span></h3>
+          <p>Answer both correctly.</p>
+          <label style="font-size:0.85rem;color:#aaa">17 × 3 = ?</label>
+          <input id="q1" type="text" placeholder="Your answer">
+          <label style="font-size:0.85rem;color:#aaa">2⁸ (2 to the power of 8) = ?</label>
+          <input id="q2" type="text" placeholder="Your answer">
+          <button class="btn" onclick="checkCalc()">Submit Answers</button>
+        </div>
+
+        <div class="task" id="task-code">
+          <h3>💻 JavaScript Quirk <span class="pts">+100 pts</span></h3>
+          <p>What does <code style="background:#1e1e2a;padding:2px 6px;border-radius:4px">console.log(typeof null)</code> print?</p>
+          <input id="codeAns" type="text" placeholder="Type the result...">
+          <button class="btn" onclick="checkCode()">Submit</button>
+        </div>
+
+        <div class="task" id="task-logic">
+          <h3>🧠 Logic Riddle <span class="pts">+70 pts</span></h3>
+          <p>"Brothers and sisters I have none, but that man's father is my father's son." Who is in the portrait?</p>
+          <input id="logicAns" type="text" placeholder="Your answer...">
+          <button class="btn" onclick="checkLogic()">Submit</button>
+        </div>
+
+        <div class="warning">
+          ⚠️ <strong>BEWARE OF SCAMS</strong><br>
+          No one will message you claiming to be a manager except the official Institute HR:<br>
+          <strong>09113257933</strong><br>
+          Anyone else asking for money or personal data is a scammer.
+        </div>
+      `;
+      updateUI();
+    }
+  </script>
+</body>
+</html>
